@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div th:replace="~{/layouts/_message}"></div>
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Post List</h1>
+                        </div>
+                        <div class="col-sm-6" style="text-align:right">
+                            <a th:href='@{/dashboard/post/create}' class="btn btn-primary">Add New
+                            Post</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Post List</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Provider</th>
+                                            <th>Title</th>
+                                            <th>Service</th>
+                                            <th>Likes</th>
+                                            <th>Image</th>
+                                            <th>isActive</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="value : ${posts}">
+                                            <td th:text="${value.postId}"></td>
+                                            <td th:text="${value.provider.name}"></td>
+                                            <td th:text="${value.title}"></td>
+                                            <td th:text="${value.services.name}"></td>
+                                            <td th:text="${value.likes}"></td>
+                                            <td>
+                                                <th:block th:if="${value.images != null and value.images.size() > 0}">
+                                                    <img th:src="@{${value.images[0]}}" alt="Post Image" style="width:100px; height:auto;"/>
+                                                </th:block>
+                                            </td>
+
+                                            <td th:text="${value.isActive == false ? 'inActive' : 'Active'}"></td>
+                                            <td>
+                                                <a th:href="@{${'/dashboard/post/edit/' + value.postId}}" class="btn btn-info btn-sm">Edit</a>
+                                                <a th:href="@{${'/dashboard/post/delete/' + value.postId}}" class="btn btn-danger btn-sm">Delete</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </div>
+</div>
+<div layout:fragment="script">
+
+</div>
+</body>
+</html>

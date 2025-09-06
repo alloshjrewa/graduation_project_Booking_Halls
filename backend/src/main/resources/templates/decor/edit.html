@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/app}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <h1>Edit Decor</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <form th:action="@{/dashboard/decor/update/{id}(id=${updatedDecor.id})}"  method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label>Name</label>
+                  <input type="text" class="form-control" th:name="name" th:value="${updatedDecor.name}" required placeholder="Enter Decor Name">
+                  <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('name')}" th:text="${fieldErrors['name']}"></div>
+                  <div th:if="${decorError != null}" style="color: red;">
+                    <span th:text="${decorError}"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Type</label>
+                  <input type="text" class="form-control" th:name="type" th:value="${updatedDecor.type}" required placeholder="Enter Decor Type">
+                  <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('type')}" th:text="${fieldErrors['type']}"></div>
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea class="form-control" th:name="description" placeholder="Enter Decor Description" th:text="${updatedDecor.description}"></textarea>
+                  <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('description')}" th:text="${fieldErrors['description']}"></div>
+                </div>
+                <div class="form-group">
+                  <label>Price</label>
+                  <input type="number" class="form-control" th:name="price" th:value="${updatedDecor.price}" required placeholder="Enter Decor Price">
+                  <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('price')}" th:text="${fieldErrors['price']}"></div>
+                </div>
+                <div>
+                  <label>Existing Images</label>
+                  <div th:if="${updatedDecor.existingImages != null}" class="row">
+                    <div th:each="image : ${updatedDecor.existingImages}" class="col-md-1 " style="margin-right:40px">
+                      <img th:src="@{${image}}" alt="Decor Image" style="width: 100px;"/>
+                      <input type="checkbox" th:value="${image}" name="imagesToDelete"  /> Delete
+                    </div>
+                  </div>
+                  <div th:if="${updatedDecor.existingImages == null}">
+                    <p>No existing images to display.</p>
+                  </div>
+                </div>
+                <br>
+                <div>
+                  <label>New Images</label>
+                  <input type="file" name="newImages" multiple accept="image/*">
+                </div>
+                <br>
+                <div class="form-group">
+                  <label>Status</label>
+                  <select class="form-control" th:name="isActive">
+                    <option th:value="0" th:selected="${updatedDecor.isActive == false}">Inactive</option>
+                    <option th:value="1" th:selected="${updatedDecor.isActive == true}">Active</option>
+                  </select>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

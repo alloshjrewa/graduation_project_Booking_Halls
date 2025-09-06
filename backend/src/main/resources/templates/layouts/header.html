@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+</head>
+<body>
+<div th:fragment="header">
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+            </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+
+            <!-- Messages Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-comments"></i>
+                    <span class="badge badge-danger navbar-badge">3</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Brad Diesel
+                                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">Call me whenever you can...</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    John Pierce
+                                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">I got your message bro</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <!-- Message Start -->
+                        <div class="media">
+                            <div class="media-body">
+                                <h3 class="dropdown-item-title">
+                                    Nora Silvester
+                                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                                </h3>
+                                <p class="text-sm">The subject goes here</p>
+                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                            </div>
+                        </div>
+                        <!-- Message End -->
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                </div>
+            </li>
+            <!-- Notifications Dropdown Menu -->
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#">
+                    <i class="far fa-bell"></i>
+                    <span class="badge badge-warning navbar-badge">15</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <span class="dropdown-item dropdown-header">15 Notifications</span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-envelope mr-2"></i> 4 new messages
+                        <span class="float-right text-muted text-sm">3 mins</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-users mr-2"></i> 8 friend requests
+                        <span class="float-right text-muted text-sm">12 hours</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        <i class="fas fa-file mr-2"></i> 3 new reports
+                        <span class="float-right text-muted text-sm">2 days</span>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <div class="brand-link">
+            <img th:src="@{/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+            <b><span th:text="${session.user.Username}" style="font-size:14px;" class="brand-text ">Admin</span></b>
+            <br>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard}" th:class="${currentURI.equals('/dashboard')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/admin/list}"  th:class="${currentURI.contains('/dashboard/admin')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-user-shield"></i>
+                            <p>
+                                Admin
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/provider/list}"  th:class="${currentURI.contains('/dashboard/provider')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-briefcase"></i>
+                            <p>
+                                Provider
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/user/list}"  th:class="${currentURI.contains('/dashboard/user')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                User
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/hall/list}"  th:class="${currentURI.contains('/dashboard/hall')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fa fa-home"></i>
+                            <p>
+                                Hall
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/decor/list}"  th:class="${currentURI.contains('/dashboard/decor')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-gift"></i>
+                            <p>
+                                Decor
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/service/list}"  th:class="${currentURI.contains('/dashboard/service')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-handshake"></i>
+                            <p>
+                                Service
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/booking/list}"  th:class="${currentURI.contains('/dashboard/booking')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-file-alt"></i>
+                            <p>
+                                Booking
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/post/list}"  th:class="${currentURI.contains('/dashboard/post')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-pencil-alt"></i>
+                            <p>
+                                Post
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/comment/list}"  th:class="${currentURI.contains('/dashboard/comment')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon  fa fa-comments"></i>
+                            <p>
+                                Comment
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/payment/list}"  th:class="${currentURI.contains('/dashboard/payment')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-credit-card"></i>
+                            <p>
+                                Payment
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/history/list}"  th:class="${currentURI.contains('/dashboard/history')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                            <p>
+                                Payment History
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/notification/list}"  th:class="${currentURI.contains('/dashboard/notification')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-bell"></i>
+                            <p>
+                                Notification
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/contact_us/list}"  th:class="${currentURI.contains('/dashboard/contact_us')} ? 'nav-link active ' : 'nav-link'">
+                            <i class="nav-icon fas fa-star-half-alt"></i>
+                            <p>
+                                Contact Us
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/dashboard/logout}" class="nav-link">
+                            <i class="nav-icon fas fa-sign-out-alt"></i>
+                            <p>
+                                Logout
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+</div>
+</body>
+</html>

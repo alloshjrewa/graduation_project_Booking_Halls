@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div th:replace="~{/layouts/_message}"></div>
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 th:text="'Booking List (Total : ' + ${bookingCount} + ')'"></h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <!-- Search Form -->
+                        <form method="get" th:action="@{/dashboard/booking/list}">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Booking Search</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <!-- Example Search Input -->
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Name</label>
+                                                <input type="text" name="name" placeholder="Name" class="form-control" th:value="${param.name}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="text" name="email" placeholder="Email" class="form-control" th:value="${param.email}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Phone</label>
+                                                <input type="text" name="phone" placeholder="Phone" class="form-control" th:value="${param.phone}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Start Date</label>
+                                                <input type="date" style="padding: 6px;" name="startAt" class="form-control" th:value="${param.startAt}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>End Date</label>
+                                                <input type="date" style="padding: 6px;" name="endAt" class="form-control" th:value="${param.endAt}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn" style="background: #0084D1;color:#fff">Search</button>
+                                            <a th:href="@{/dashboard/booking/list}" class="btn" style="background: #5CC6FF;color:#fff">Reset</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Booking Table -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Booking List</h3>
+                            </div>
+                            <div class="card-body p-0" style="overflow:auto;">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="book : ${bookings}">
+                                        <td th:text="${book.id}"></td>
+                                        <td th:text="${book.user.name}"></td>
+                                        <td th:text="${book.user.email}"></td>
+                                        <td th:text="${book.user.phone}"></td>
+                                        <td th:text="${#numbers.formatDecimal(book.totalPrice, 1, 'COMMA', 2, 'POINT')}"></td>
+                                        <td>
+                                            <div th:text="${book.status}"></div>
+                                        </td>
+                                        <td th:text="${#dates.format(book.startAt, 'dd-MM-yyyy hh:mm a')}"></td>
+                                        <td th:text="${#dates.format(book.endAt, 'dd-MM-yyyy hh:mm a')}"></td>
+                                        <td>
+                                            <a th:href="@{'/dashboard/booking/detail/' + ${book.id}}"
+                                               class="btn btn-sm" style="background: #CD9A6A;color:#fff">Detail</a>
+                                            <a th:href="@{${'/dashboard/booking/delete/' + book.id}}" class="btn btn-danger btn-sm">Delete</a>
+
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div layout:fragment="script">
+</div>
+</body>
+</html>

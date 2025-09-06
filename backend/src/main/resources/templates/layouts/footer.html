@@ -1,0 +1,23 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+</head>
+<body>
+<div th:fragment="footer">
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <strong>Copyright &copy; <span th:text="${#dates.format(new java.util.Date(), 'yyyy')}"> 2025 </span><a href="https://adminlte.io"> Admin Side</a>.</strong>
+        All rights reserved.
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <h1>Add New Admin</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <!-- Form Start -->
+                            <form th:action="@{/dashboard/admin/store}" method="post" th:object="${AdminDto}">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" th:field="*{name}" required placeholder="Enter Name">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('name')}" th:text="${fieldErrors['name']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" th:field="*{email}" required placeholder="Enter Email">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('email')}" th:text="${fieldErrors['email']}"></div>
+                                    <div th:if="${emailError != null}" style="color: red;">
+                                        <span th:text="${emailError}"></span>
+                                    </div>                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" class="form-control" th:field="*{password}" required placeholder="Password">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('password')}" th:text="${fieldErrors['password']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('isActive')}" th:text="${fieldErrors['isActive']}"></div>
+                                    <select class="form-control" th:field="*{isActive}">
+                                        <option th:value="false" th:selected="${AdminDto.isActive == false}">Inactive</option>
+                                        <option th:value="true" th:selected="${AdminDto.isActive == true}">Active</option>
+                                    </select>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>

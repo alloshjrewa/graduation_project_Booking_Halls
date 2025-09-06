@@ -1,0 +1,42 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${primary != null}" class="alert alert-primary" role="alert">
+  <span th:text="${primary}"></span>
+</div>
+
+<div th:if="${secondary != null}" class="alert alert-secondary" role="alert">
+  <span th:text="${secondary}"></span>
+</div>
+
+<div th:if="${success != null}" class="alert alert-success" role="alert">
+  <span th:text="${success}"></span>
+</div>
+
+<div th:if="${error != null}" class="alert alert-error" role="alert">
+  <span th:text="${error}"></span>
+</div>
+
+<div th:if="${warning != null}" class="alert alert-warning" role="alert">
+  <span th:text="${warning}"></span>
+</div>
+
+<div th:if="${info != null}" class="alert alert-info" role="alert">
+  <span th:text="${info}"></span>
+</div>
+
+
+<div th:if="${light != null}" class="alert alert-light" role="alert">
+  <span th:text="${light}"></span>
+</div>
+
+<div th:if="${dark != null}" class="alert alert-dark" role="alert">
+  <span th:text="${dark}"></span>
+</div>
+
+</body>
+</html>

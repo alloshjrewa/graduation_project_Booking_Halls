@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-12">
+              <h1>Edit Provider</h1>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card card-primary">
+                <!-- Form Start -->
+                <form th:action="@{/dashboard/provider/update/{id}(id=${provider.id})}"  th:method="POST" enctype="multipart/form-data">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" class="form-control" th:name="name" required
+                             th:value="${provider.name}" placeholder="Enter Name">
+                      <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('name')}" th:text="${fieldErrors['name']}"></div>
+
+                    </div>
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" class="form-control" th:name="email" required
+                             th:value="${provider.email}" placeholder="Enter Email">
+                      <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('email')}" th:text="${fieldErrors['email']}"></div>
+                      <div th:if="${emailError != null}" style="color: red;">
+                        <span th:text="${emailError}"></span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" class="form-control" th:name="password" placeholder="Password">
+                      <div th:if="${passwordError != null}" style="color: red;">
+                        <span th:text="${passwordError}"></span>
+                      </div>
+                      <p>If you want to edit the password, enter a new password.</p>
+                    </div>
+                    <div class="form-group">
+                      <label>Phone Number</label>
+                      <input type="text" class="form-control" th:name="phone" th:value="${provider.phone}" required placeholder="Enter Provider Phone Number">
+                      <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('phone')}" th:text="${fieldErrors['phone']}"></div>
+                    </div>
+                    <div class="form-group">
+                      <label>Service Specialty</label>
+                      <input type="text" class="form-control" th:name="serviceSpecialty" th:value="${provider.serviceSpecialty}"  placeholder="Enter Provider Service Specialty">
+                      <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('serviceSpecialty')}" th:text="${fieldErrors['serviceSpecialty']}"></div>
+                    </div>
+                    <div class="form-group">
+                      <label>Info</label>
+                      <input type="text" class="form-control"  th:name="info" th:value="${provider.info}"  placeholder="Enter Provider Info">
+                      <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('info')}" th:text="${fieldErrors['info']}"></div>
+                    </div>
+                    <div class="form-group">
+
+                      <div>
+                        <label>Existing Images</label>
+                        <div th:if="${provider.existingImages != null}" class="row">
+                          <div th:each="image : ${provider.existingImages}" class="col-md-1 " style="margin-right:40px">
+                            <img th:src="@{${image}}" alt="Prvoider Image" style="width: 100px;"/>
+                            <input type="checkbox" th:value="${image}" name="imagesToDelete" /> Delete
+                          </div>
+                        </div>
+                        <div th:if="${provider.existingImages == null}">
+                          <p>No existing images to display.</p>
+                        </div>
+                      </div>
+                      <br>
+                      <div>
+                        <label>New Images</label>
+                        <input type="file" name="newImages" multiple accept="image/*">
+                      </div>
+                      <br>
+                      <label>Status</label>
+                      <select class="form-control" th:name="isActive">
+                        <option th:value="0" th:selected="${provider.isActive == false}">Inactive</option>
+                        <option th:value="1" th:selected="${provider.isActive == true}">Active</option>
+                      </select>
+                      <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('isActive')}" th:text="${fieldErrors['isActive']}"></div>
+
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-success">Update</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>
