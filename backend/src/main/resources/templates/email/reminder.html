@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Reminder</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+<div style="max-width: 600px; margin: auto; background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 0 10px #ccc;">
+    <h2 style="color: #0084D1; text-align: center;">Booking Payment Reminder</h2>
+    <p>Dear <strong th:text="${name}"></strong>,</p>
+    <p>
+        This is a reminder that your booking scheduled for
+        <strong th:text="${date}"></strong>
+        is still unpaid.
+    </p>
+    <p>Please complete your payment within 3 days to confirm your booking.</p>
+    <p style="margin-top: 20px;">Thank you,<br><strong>Event Management Team</strong></p>
+</div>
+</body>
+</html>

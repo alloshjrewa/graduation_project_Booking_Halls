@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <h1>Add New Service</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <form th:action="@{/dashboard/service/store}" method="POST" th:object="${service}" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" th:field="*{name}" placeholder="Enter Service Name" required>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('name')}" th:text="${fieldErrors['name']}"></div>
+                                    <div th:if="${serviceError != null}" style="color: red;">
+                                        <span th:text="${serviceError}"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" th:field="*{description}" placeholder="Enter Service Description"></textarea>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('description')}" th:text="${fieldErrors['description']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    <input type="number" class="form-control" th:field="*{price}" required placeholder="Enter Service Price" min="0.01" step="0.01">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('price')}" th:text="${fieldErrors['price']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <input type="text" class="form-control" th:field="*{type}" required placeholder="Enter Service type">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('type')}" th:text="${fieldErrors['type']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Providers</label>
+                                    <select class="form-control" th:field="*{providerIds}" multiple>
+                                        <option th:each="provider : ${providers}"
+                                                th:value="${provider.id}"
+                                                th:text="${provider.name}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" name="images" multiple required accept="image/*" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control" th:field="*{isActive}">
+                                        <option th:value="0" th:selected="${service.isActive == false}">Inactive</option>
+                                        <option th:value="1" th:selected="${service.isActive == true}">Active</option>
+                                    </select>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>

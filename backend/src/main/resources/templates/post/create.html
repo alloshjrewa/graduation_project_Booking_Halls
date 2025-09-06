@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <h1>Add New Post</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <form th:action="@{/dashboard/post/store}" method="POST" th:object="${post}" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <label>Title</label>
+                                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter Post title" required>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('title')}" th:text="${fieldErrors['title']}"></div>
+                                    <div th:if="${postError != null}" style="color: red;">
+                                        <span th:text="${postError}"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Content</label>
+                                    <textarea class="form-control" th:field="*{content}" placeholder="Enter Post Content"></textarea>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('content')}" th:text="${fieldErrors['content']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Providers</label>
+                                    <select class="form-control" th:field="*{provider}" required>
+                                        <option th:each="provider : ${providers}"
+                                                th:value="${provider.id}"
+                                                th:text="${provider.name}"></option>
+                                    </select>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('provider')}" th:text="${fieldErrors['provider']}"></div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Services</label>
+                                    <select class="form-control" th:field="*{service}" required>
+                                        <option th:each="service : ${services}"
+                                                th:value="${service.id}"
+                                                th:text="${service.name}"></option>
+                                    </select>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('service')}" th:text="${fieldErrors['service']}"></div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" name="images" multiple required accept="image/*" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control" th:field="*{isActive}">
+                                        <option th:value="0" th:selected="${post.isActive == 0}">Inactive</option>
+                                        <option th:value="1" th:selected="${post.isActive == 1}">Active</option>
+                                    </select>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div th:replace="~{/layouts/_message}"></div>
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Payment List</h1>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Payments</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Booking Id</th>
+                                            <th>Client Name</th>
+                                            <th>Client Email</th>
+                                            <th>Status</th>
+                                            <th>Payment Method</th>
+                                            <th>Amount</th>
+                                            <th>Transaction Id</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="value : ${payments}">
+                                            <td th:text="${value.id}"></td>
+                                            <td th:text="${value.booking != null ? value.booking.id : 'N/A'}"></td>                                            <td th:text="${value.clientName}"></td>
+                                            <td th:text="${value.clientEmail}"></td>
+                                            <td th:text="${value.status}"></td>
+                                            <td th:text="${value.paymentMethod}"></td>
+                                            <td th:text="${#numbers.formatDecimal(value.amount, 1, 'COMMA', 2, 'POINT')}"></td>
+                                            <td th:text="${value.transactionId}"></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    </div>
+</div>
+<div layout:fragment="script">
+
+</div>
+</body>
+</html>

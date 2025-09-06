@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <h1>Add New Hall</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <form th:action="@{/dashboard/hall/store}" method="POST" th:object="${hall}" enctype="multipart/form-data">
+
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" th:field="*{name}" placeholder="Enter Hall Name" required>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('name')}" th:text="${fieldErrors['name']}"></div>
+                                    <div th:if="${hallError != null}" style="color: red;">
+                                        <span th:text="${hallError}"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    <input type="text" class="form-control" th:field="*{location}" required placeholder="Enter Hall Location">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('location')}" th:text="${fieldErrors['location']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" th:field="*{description}" placeholder="Enter Hall Description"></textarea>
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('description')}" th:text="${fieldErrors['description']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price Per Day</label>
+                                    <input type="number" class="form-control" th:field="*{price_per_day}" required placeholder="Enter Hall Price Per Day" min="0.01" step="0.01">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('price_per_day')}" th:text="${fieldErrors['price_per_day']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Price Per Hour</label>
+                                    <input type="number" class="form-control" th:field="*{price_per_hour}" required placeholder="Enter Hall Price Per Hour" min="0.01" step="0.01">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('price_per_hour')}" th:text="${fieldErrors['price_per_hour']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Capacity</label>
+                                    <input type="number" class="form-control" th:field="*{capacity}" required placeholder="Enter Hall Capacity" min="1">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('capacity')}" th:text="${fieldErrors['capacity']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="text" class="form-control" th:field="*{phone}" required placeholder="Enter Hall Phone Number">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('phone')}" th:text="${fieldErrors['phone']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Latitude</label>
+                                    <input type="text" class="form-control" th:field="*{latitude}" required placeholder="Enter Hall Latitude">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('latitude')}" th:text="${fieldErrors['latitude']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Longitude</label>
+                                    <input type="text" class="form-control" th:field="*{longitude}" required placeholder="Enter Hall Longitude">
+                                    <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('longitude')}" th:text="${fieldErrors['longitude']}"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" name="images" multiple required accept="image/*" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select class="form-control" th:field="*{isActive}">
+                                        <option th:value="0" th:selected="${hall.isActive == 0}">Inactive</option>
+                                        <option th:value="1" th:selected="${hall.isActive == 1}">Active</option>
+                                    </select>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<div layout:fragment="script">
+</div>
+</body>
+</html>

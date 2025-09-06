@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layouts/app}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <h1>Edit Post</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-primary">
+              <form th:action="@{/dashboard/post/update/{id}(id=${updatedPost.id})}"  method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                  <label>Title</label>
+                  <input type="text" class="form-control" th:name="title" th:value="${updatedPost.title}" required placeholder="Enter Post Name">
+                  <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('title')}" th:text="${fieldErrors['title']}"></div>
+                  <div th:if="${postError != null}" style="color: red;">
+                    <span th:text="${postError}"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Content</label>
+                  <input type="text" class="form-control" th:name="content" th:value="${updatedPost.content}" required placeholder="Enter Post Name">
+                  <div style="color: red" th:if="${fieldErrors != null and fieldErrors.containsKey('content')}" th:text="${fieldErrors['content']}"></div>
+                  <div th:if="${postError != null}" style="color: red;">
+                    <span th:text="${postError}"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Providers</label>
+                  <select class="form-control" th:name="provider">
+                    <option th:each="provider : ${providers}"
+                            th:value="${provider.id}"
+                            th:text="${provider.name}"
+                            th:selected="${updatedPost.provider == provider.id}"></option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Services</label>
+                  <select class="form-control" th:name="service">
+                    <option th:each="service : ${services}"
+                            th:value="${service.id}"
+                            th:text="${service.name}"
+                            th:selected="${updatedPost.service == service.id}"></option>
+                  </select>
+                </div>
+                <div>
+                  <label>Existing Images</label>
+                  <div th:if="${updatedPost.existingImages != null}" class="row">
+                    <div th:each="image : ${updatedPost.existingImages}" class="col-md-1 " style="margin-right:40px">
+                      <img th:src="@{${image}}" alt="Post Image" style="width: 100px;"/>
+                      <input type="checkbox" th:value="${image}" name="imagesToDelete" /> Delete
+                    </div>
+                  </div>
+                  <div th:if="${updatedPost.existingImages == null}">
+                    <p>No existing images to display.</p>
+                  </div>
+                </div>
+                <br>
+                <div>
+                  <label>New Images</label>
+                  <input type="file" name="newImages" multiple accept="image/*">
+                </div>
+                <br>
+                <label>Status</label>
+                  <select class="form-control" name="isActive">
+                    <option th:value="0" th:selected="${updatedPost.isActive == false}">Inactive</option>
+                    <option th:value="1" th:selected="${updatedPost.isActive == true}">Active</option>
+                  </select>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

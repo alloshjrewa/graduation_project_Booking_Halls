@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/app}" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        .form-group {
+            margin-bottom: 2px;
+        }
+    </style>
+    <title>Dashboard</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-12">
+                        <h1>Booking Detail</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- Order Info -->
+                    <div class="col-md-12">
+                        <div class="card card-primary">
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label>ID : <span style="font-weight: normal" th:text="${booking.id}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Type : <span style="font-weight: normal" th:text="${booking.type}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hall Booking Price : <span style="font-weight: normal" th:text="${booking.hallBookingPrice}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Price : <span style="font-weight: normal" th:text="${booking.totalPrice}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Date : <span style="font-weight: normal" th:text="${#dates.format(booking.startAt, 'dd-MM-yyyy hh:mm a')}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date : <span style="font-weight: normal" th:text="${#dates.format(booking.endAt, 'dd-MM-yyyy hh:mm a')}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Booking Status : <span style="font-weight: normal" th:text="${booking.status}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Created Date : <span style="font-weight: normal" th:text="${#dates.format(booking.createdAt, 'dd-MM-yyyy hh:mm a')}"></span></label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>User Name : <span style="font-weight: normal" th:text="${booking.user.name}"></span></label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Email : <span style="font-weight: normal" th:text="${booking.user.email}"></span></label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Phone : <span style="font-weight: normal" th:text="${booking.user.phone}"></span></label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Hall Name : <span style="font-weight: normal" th:text="${booking.hall.name}"></span></label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Hall Price Per Day: <span style="font-weight: normal" th:text="${booking.hall.price_per_day}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hall Price Per Hour: <span style="font-weight: normal" th:text="${booking.hall.price_per_hour}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hall Capacity : <span style="font-weight: normal" th:text="${booking.hall.capacity}"></span></label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hall Phone : <span style="font-weight: normal" th:text="${booking.hall.phone}"></span></label>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Payment Method : <span style="text-transform:capitalize;font-weight: normal" th:text="${booking.payments[0].paymentMethod}"></span></label>
+                                </div>
+                                <div th:each="item : ${booking.hall.images}">
+                                    <td><img style="width:75px;height: 75px" th:src="${item}" /></td>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decor Details -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Decor Detail</h3>
+                            </div>
+                            <div class="card-body p-0" style="overflow: auto">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Type</th>
+                                        <th>Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="decor : ${booking.decorList}">
+                                        <td><img style="width:75px;height: 75px" th:src="${decor.images[0]}" /></td>
+                                        <td th:text="${decor.name}"></td>
+                                        <td th:text="${decor.description}"></td>
+                                        <td th:text="${decor.type}"></td>
+                                        <td th:text="${#numbers.formatDecimal(decor.price, 1, 'COMMA', 2, 'POINT')}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service Details -->
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Service Detail</h3>
+                            </div>
+                            <div class="card-body p-0" style="overflow: auto">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Provider Name</th>
+                                        <th>Provider Phone</th>
+                                        <th>Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="service : ${booking.servicesList}">
+                                        <td><img style="width:75px;height: 75px" th:src="${service.images[0]}" /></td>
+                                        <td th:text="${service.name}"></td>
+                                        <td th:text="${service.description}"></td>
+                                        <td th:text="${service.providers[0].name}"></td>
+                                        <td th:text="${service.providers[0].phone}"></td>
+                                        <td th:text="${#numbers.formatDecimal(service.price, 1, 'COMMA', 2, 'POINT')}"></td>
+                                        <!--                                        <td th:text="${#numbers.formatDecimal(item.totalPrice, 1, 'COMMA', 2, 'POINT')}"></td>-->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div layout:fragment="script">
+</div>
+</body>
+</html>
